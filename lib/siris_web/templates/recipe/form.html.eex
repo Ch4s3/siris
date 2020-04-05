@@ -1,0 +1,23 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :name %>
+  <%= text_input f, :name, autocomplete: false %>
+  <%= error_tag f, :name %>
+
+  <%= label f, :boil_time %>
+  <%= number_input f, :boil_time, value: 60, step: 5, min: 0 %>
+  <%= error_tag f, :boil_time %>
+
+  <%= label f, :batch_size, "Batch Size (gal)" %>
+  <%= number_input f, :batch_size, value: 5.0 %>
+  <%= error_tag f, :batch_size %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

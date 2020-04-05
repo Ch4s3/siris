@@ -1,0 +1,56 @@
+<h2> Hop Schedule </h2>
+
+<table>
+  <thead>
+    <th>Variety</th>
+    <th>AA%</th>
+    <th>Ounces</th>
+    <th>Boil Time</th>
+    <th></th>
+  <thead>
+  <%= for hop <- @hop_additions do %>
+    <tr>
+      <td><%= hop.name %></td>
+      <td><%= hop.aa_rating %></td>
+      <td><%= hop.ounces %></td>
+      <td><%= hop.boil_time %></td>
+      <td>
+        <button type="button" class="remove" phx-click="remove_hop" phx-value-hop-id=<%= hop.id %>>➖</button>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3><b>IBUS:</b> <%=@recipe.ibus %></h3>
+<h2> New Addition </h2>
+<%= f = form_for @changeset, "#", [phx_submit: :add_hops, phx_change: :validate, phx_debounce: "1000"] %>
+  <%= hidden_input f, :recipe_id, value: @recipe.id %>
+  
+  <%= label f, :name, "Variety" %>
+  <%= text_input f, :name, [autocomplete: "off", placeholder: "What kind of hops?", phx_keyup: "hop-variety", phx_debounce: "100"]%>
+  <%= error_tag f, :name %>
+  <div>
+    <%= for hop <- @hops do %>
+      <p> 
+        <%= hop.variety %> |
+        <%= hop.origin %>  |
+        <%= hop.aa_low %>  |
+        <%= hop.aa_high %> |
+        <button type="button" phx-click="select_variety" phx-value-hop-id=<%= hop.id %>>🍃</button>
+       </p>
+    <% end %>
+  </div>
+  <%= label f, :aa_rating, "AA%" %>
+  <%= number_input f, :aa_rating, step: "0.1", min: "0.0"%>
+  <%= error_tag f, :aa_rating %>
+  
+  <%= label f, :ounces %>
+  <%= number_input f, :ounces, step: "0.1", min: "0.0" %>
+  <%= error_tag f, :ounces %>
+
+  <%= label f, :boil_time %>
+  <%= number_input f, :boil_time, step: "5", min: "0"%>
+  <%= error_tag f, :boil_time %>
+  </br>
+  <%= submit "Add", phx_disable_with: "Adding..." %>
+</form>
