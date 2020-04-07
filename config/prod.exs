@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 
 # Do not print debug messages in production
-config :logger, level: :debug
+config :logger, level: :info
 
 config :siris, SirisWeb.Endpoint,
   url: [host: "protected-everglades-51090.herokuapp.com", port: 80],
