@@ -1,7 +1,7 @@
 import Config
 
 secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
-application_port = System.fetch_env!("APP_PORT")
+port = String.to_integer(System.get_env("PORT", "4000"))
 
 database_url =
   System.get_env("DATABASE_URL") ||
@@ -16,5 +16,5 @@ config :siris, Siris.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :siris, SirisWeb.Endpoint,
-  http: [:inet6, port: String.to_integer(application_port)],
-  secret_key_base: secret_key_base
+  secret_key_base: secret_key_base,
+  http: [:inet6, port: port]

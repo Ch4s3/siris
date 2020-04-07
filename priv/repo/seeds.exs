@@ -13,7 +13,8 @@ defmodule SeedFns do
   alias Siris.Ingredients
 
   def get_hops() do
-    File.stream!("priv/repo/seed_data/hops.csv")
+    # File.stream!("priv/repo/seed_data/hops.csv")
+    File.stream!("../lib/siris-0.1.0/priv/repo/seed_data/hops.csv")
     |> CSV.decode!(headers: true)
     |> SeedFns.insert_each_hop()
   end
