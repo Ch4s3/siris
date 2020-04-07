@@ -14,7 +14,7 @@ use Mix.Config
 config :logger, level: :info
 
 config :siris, SirisWeb.Endpoint,
-  url: [host: "protected-everglades-51090.herokuapp.com", port: 80],
+  url: [host: "siris-brewing.herokuapp.com", scheme: "https", port: 444],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true
 
