@@ -44,7 +44,8 @@ defmodule Siris.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:csv, "~> 2.3"},
-      {:phoenix_live_view, "~> 0.10.0"}
+      {:phoenix_live_view, "~> 0.10.0"},
+      {:sentry, "~> 7.0"}
     ]
   end
 

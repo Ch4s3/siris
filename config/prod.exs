@@ -18,6 +18,16 @@ config :siris, SirisWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true
 
+config :sentry,
+  dsn: "https://275dd1789afa497d82e1fbfe6631eff2@o375219.ingest.sentry.io/5194307",
+  environment_name: :prod,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  tags: %{
+    env: "production"
+  },
+  included_environments: [:prod]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

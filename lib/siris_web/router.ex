@@ -1,6 +1,8 @@
 defmodule SirisWeb.Router do
   use SirisWeb, :router
   import Phoenix.LiveView.Router
+  use Plug.ErrorHandler
+  use Sentry.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]
