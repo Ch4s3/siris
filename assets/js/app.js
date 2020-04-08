@@ -25,4 +25,4 @@ liveSocket.connect();
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
-require("./reason.bs");
+require("./reason.bs.js");

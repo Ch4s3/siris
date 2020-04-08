@@ -25,8 +25,8 @@ RUN mix deps.compile
 COPY assets/package.json assets/yarn.lock assets/
 COPY assets assets
 COPY priv priv
-RUN cd assets && yarn install --pure-lockfile
-RUN cd assets && yarn deploy
+
+RUN cd assets && yarn install --pure-lockfile && yarn deploy
 RUN mix phx.digest
 
 # build project
