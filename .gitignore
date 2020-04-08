@@ -38,6 +38,8 @@ npm-debug.log
 /assets/.merlin
 /assets/.cache/
 /assets/yarn-error.log
+/assets/js/*.bs.js
+
 node_modules
 
 config/prod.secret.exs

@@ -1,4 +1,5 @@
 defmodule SirisWeb.HopAdditionsLive do
+  require Logger
   use Phoenix.LiveView
   alias Siris.Recipes
   alias Siris.Recipes.HopAddition
@@ -52,6 +53,7 @@ defmodule SirisWeb.HopAdditionsLive do
   end
 
   def handle_event("hop-variety", data, socket) do
+    Logger.info("HOP-VARIETY CALLED with: #{data["value"]}")
     hops = Ingredients.find_by(:variety, data["value"])
     next_data = socket.assigns |> Map.merge(%{hops: hops})
 

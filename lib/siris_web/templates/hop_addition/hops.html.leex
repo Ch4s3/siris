@@ -41,15 +41,15 @@
     <% end %>
   </div>
   <%= label f, :aa_rating, "AA%" %>
-  <%= number_input f, :aa_rating, step: "0.1", min: "0.0"%>
+  <%= number_input f, :aa_rating, step: "0.1", min: "0.0", input_mode: "numeric"%>
   <%= error_tag f, :aa_rating %>
   
   <%= label f, :ounces %>
-  <%= number_input f, :ounces, step: "0.1", min: "0.0" %>
+  <%= number_input f, :ounces, step: "0.1", min: "0.0", input_mode: "numeric" %>
   <%= error_tag f, :ounces %>
 
   <%= label f, :boil_time %>
-  <%= number_input f, :boil_time, step: "5", min: "0"%>
+  <%= number_input f, :boil_time, step: "5", min: "0", input_mode: "numeric"%>
   <%= error_tag f, :boil_time %>
   </br>
   <%= submit "Add", phx_disable_with: "Adding..." %>
