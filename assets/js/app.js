@@ -13,15 +13,16 @@ import "phoenix_html";
 
 import { Socket } from "phoenix";
 import LiveSocket from "phoenix_live_view";
-require("./reason.bs");
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-  params: { _csrf_token: csrfToken }
+  params: { _csrf_token: csrfToken },
 });
 liveSocket.connect();
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+require("./reason.bs");
