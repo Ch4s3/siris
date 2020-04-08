@@ -23,11 +23,11 @@
 
 <h3><b>IBUS:</b> <%=@recipe.ibus %></h3>
 <h2> New Addition </h2>
-<%= f = form_for @changeset, "#", [phx_submit: :add_hops, phx_change: :validate, phx_debounce: "1000"] %>
+<%= f = form_for @changeset, "#", [phx_submit: :add_hops, phx_change: :validate_or_typeahead, phx_debounce: "2000"] %>
   <%= hidden_input f, :recipe_id, value: @recipe.id %>
   
   <%= label f, :name, "Variety" %>
-  <%= text_input f, :name, [autocomplete: "off", placeholder: "What kind of hops?", phx_keyup: "hop-variety", phx_debounce: "100"]%>
+  <%= text_input f, :name, [autocomplete: "off", placeholder: "What kind of hops?"]%>
   <%= error_tag f, :name %>
   <div>
     <%= for hop <- @hops do %>
@@ -41,11 +41,11 @@
     <% end %>
   </div>
   <%= label f, :aa_rating, "AA%" %>
-  <%= number_input f, :aa_rating, step: "0.1", min: "0.0", input_mode: "numeric"%>
+  <%= number_input f, :aa_rating, min: "0.0", input_mode: "numeric"%>
   <%= error_tag f, :aa_rating %>
   
   <%= label f, :ounces %>
-  <%= number_input f, :ounces, step: "0.1", min: "0.0", input_mode: "numeric" %>
+  <%= number_input f, :ounces, min: "0.0", input_mode: "numeric" %>
   <%= error_tag f, :ounces %>
 
   <%= label f, :boil_time %>

@@ -13,7 +13,17 @@ defmodule SirisWeb.HopAdditionsLive do
     SirisWeb.HopAdditionView.render("hops.html", assigns)
   end
 
-  def handle_event("validate", %{"hop_addition" => params}, socket) do
+  def handle_event(
+        "validate_or_typeahead",
+        %{"_target" => ["hop_addition", "name"], "hop_addition" => params},
+        socket
+      ) do
+    hops = Ingredients.find_by(:variety, params["name"])
+    next_data = socket.assigns |> Map.merge(%{hops: hops})
+    {:noreply, fetch(socket, next_data)}
+  end
+
+  def handle_event("validate_or_typeahead", %{"hop_addition" => params}, socket) do
     changeset =
       %HopAddition{}
       |> HopAddition.changeset(params)
@@ -52,14 +62,6 @@ defmodule SirisWeb.HopAdditionsLive do
     {:noreply, fetch(socket, next_data)}
   end
 
-  def handle_event("hop-variety", data, socket) do
-    Logger.info("HOP-VARIETY CALLED with: #{data["value"]}")
-    hops = Ingredients.find_by(:variety, data["value"])
-    next_data = socket.assigns |> Map.merge(%{hops: hops})
-
-    {:noreply, fetch(socket, next_data)}
-  end
-
   def handle_event("add_hops", %{"hop_addition" => params}, socket) do
     with cs <- HopAddition.changeset(%HopAddition{}, params),
          cs <- Map.put(cs, :action, :insert),
@@ -89,8 +91,12 @@ defmodule SirisWeb.HopAdditionsLive do
     assign(socket, %{
       hop_additions: Recipes.list_hop_additions(id),
       recipe: Recipes.get_recipe!(id),
-      changeset: data["changeset"] || Recipes.change_hop_addition(%HopAddition{}),
+      changeset: fetch_changes(data),
       hops: data[:hops] || []
     })
+  end
+
+  defp fetch_changes(data) do
+    data["changeset"] || data[:changeset] || Recipes.change_hop_addition(%HopAddition{})
   end
 end
