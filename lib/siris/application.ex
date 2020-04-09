@@ -16,6 +16,7 @@ defmodule Siris.Application do
       # {Siris.Worker, arg},
     ]
 
+    :ok = ScoutApm.Instruments.EctoTelemetry.attach(Siris.Repo)
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Siris.Supervisor]

@@ -20,6 +20,7 @@ defmodule SirisWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: SirisWeb
+      use ScoutApm.Instrumentation
 
       import Phoenix.LiveView.Controller
       import Plug.Conn

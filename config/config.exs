@@ -7,6 +7,14 @@
 # General application configuration
 use Mix.Config
 
+config :scout_apm,
+  name: "Siis-Brewing",
+  monitor: true
+
+config :phoenix, :template_engines,
+  eex: ScoutApm.Instruments.EExEngine,
+  exs: ScoutApm.Instruments.ExsEngine
+
 config :siris,
   ecto_repos: [Siris.Repo]
 

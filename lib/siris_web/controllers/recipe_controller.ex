@@ -1,6 +1,6 @@
 defmodule SirisWeb.RecipeController do
   use SirisWeb, :controller
-
+  use ScoutApm.Instrumentation
   alias Siris.Recipes
   alias Siris.Recipes.Recipe
 
