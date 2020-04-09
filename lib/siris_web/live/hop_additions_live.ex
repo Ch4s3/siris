@@ -4,26 +4,32 @@ defmodule SirisWeb.HopAdditionsLive do
   alias Siris.Recipes
   alias Siris.Recipes.HopAddition
   alias Siris.Ingredients
+  import ScoutApm.Tracing
+
+  @timing_opts [category: "Hops"]
 
   def mount(_params, data, socket) do
     {:ok, fetch(socket, data)}
   end
 
-  def render(assigns) do
+  @timing_opts [category: "Hops", name: "render"]
+  deftiming render(assigns) do
     SirisWeb.HopAdditionView.render("hops.html", assigns)
   end
 
-  def handle_event(
-        "validate_or_typeahead",
-        %{"_target" => ["hop_addition", "name"], "hop_addition" => params},
-        socket
-      ) do
+  @timing_opts [category: "Hops", name: "type-ahead"]
+  deftiming handle_event(
+              "validate_or_typeahead",
+              %{"_target" => ["hop_addition", "name"], "hop_addition" => params},
+              socket
+            ) do
     hops = Ingredients.find_by(:variety, params["name"])
     next_data = socket.assigns |> Map.merge(%{hops: hops})
     {:noreply, fetch(socket, next_data)}
   end
 
-  def handle_event("validate_or_typeahead", %{"hop_addition" => params}, socket) do
+  @timing_opts [category: "Hops", name: "validate"]
+  deftiming handle_event("validate_or_typeahead", %{"hop_addition" => params}, socket) do
     changeset =
       %HopAddition{}
       |> HopAddition.changeset(params)
@@ -32,7 +38,8 @@ defmodule SirisWeb.HopAdditionsLive do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("select_variety", %{"hop-id" => hop_id}, socket) do
+  @timing_opts [category: "Hops", name: "select variety"]
+  deftiming handle_event("select_variety", %{"hop-id" => hop_id}, socket) do
     hop_id = String.to_integer(hop_id)
 
     changeset =
@@ -62,7 +69,8 @@ defmodule SirisWeb.HopAdditionsLive do
     {:noreply, fetch(socket, next_data)}
   end
 
-  def handle_event("add_hops", %{"hop_addition" => params}, socket) do
+  @timing_opts [category: "Hops", name: "add hops"]
+  deftiming handle_event("add_hops", %{"hop_addition" => params}, socket) do
     with cs <- HopAddition.changeset(%HopAddition{}, params),
          cs <- Map.put(cs, :action, :insert),
          {true, cs} <- {cs.valid?, cs},
