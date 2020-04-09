@@ -41,11 +41,11 @@
     <% end %>
   </div>
   <%= label f, :aa_rating, "AA%" %>
-  <%= number_input f, :aa_rating, min: "0.0", input_mode: "numeric"%>
+  <%= text_input f, :aa_rating, min: "0.0", input_mode: "numeric"%>
   <%= error_tag f, :aa_rating %>
   
   <%= label f, :ounces %>
-  <%= number_input f, :ounces, min: "0.0", input_mode: "numeric" %>
+  <%= text_input f, :ounces, min: "0.0", input_mode: "numeric" %>
   <%= error_tag f, :ounces %>
 
   <%= label f, :boil_time %>
