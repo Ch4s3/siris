@@ -1,4 +1,7 @@
 defmodule Siris.Ingredients.Hop do
+  @moduledoc """
+  Database module for storing and accessing hops (mostly a lookup table)
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -4,10 +4,11 @@ defmodule Siris.Recipes do
   """
 
   import Ecto.Query, warn: false
-  alias Siris.Repo
-  alias Siris.Ingredients
   alias Ecto.Changeset
+  alias Siris.Formulas.Ibu
+  alias Siris.Ingredients
   alias Siris.Recipes.HopAddition
+  alias Siris.Repo
 
   @doc """
   Returns the list of hop_additions.
@@ -47,7 +48,7 @@ defmodule Siris.Recipes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_hop_addition(changes = %Ecto.Changeset{}), do: Repo.insert(changes)
+  def create_hop_addition(%Ecto.Changeset{} = changes), do: Repo.insert(changes)
 
   def create_hop_addition(attrs) do
     %HopAddition{}
@@ -168,7 +169,7 @@ defmodule Siris.Recipes do
   Updates Recipe with a `HopAddition`
   """
   def update_from_hop_additions(nil, recipe, additions) do
-    ibus = Siris.Formulas.Ibu.calculate(additions, recipe.batch_size, 1.060)
+    ibus = Ibu.calculate(additions, recipe.batch_size, 1.060)
     {:ok, updated_recipe} = recipe |> update_recipe(%{"ibus" => ibus})
 
     {:ok, updated_recipe, additions}
@@ -176,7 +177,7 @@ defmodule Siris.Recipes do
 
   def update_from_hop_additions(addition, recipe, additions) do
     hop_additions = [addition | additions]
-    ibus = Siris.Formulas.Ibu.calculate(hop_additions, recipe.batch_size, 1.060)
+    ibus = Ibu.calculate(hop_additions, recipe.batch_size, 1.060)
     {:ok, updated_recipe} = recipe |> update_recipe(%{"ibus" => ibus})
 
     {:ok, updated_recipe, hop_additions}

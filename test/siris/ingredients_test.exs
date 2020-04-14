@@ -162,4 +162,144 @@ defmodule Siris.IngredientsTest do
       assert %Ecto.Changeset{} = Ingredients.change_hop(hop)
     end
   end
+
+  describe "grains" do
+    alias Siris.Ingredients.Grain
+
+    @valid_attrs %{
+      description: "some description",
+      extract_fg: 120.5,
+      grain_type: "some grain_type",
+      lovibond_high: 120.5,
+      lovibond_low: 120.5,
+      manufacturer: "some manufacturer",
+      max_usage: 120.5,
+      moisture: 120.5,
+      must_mash: true,
+      name: "some name",
+      origin: "some origin",
+      potential: 120.5,
+      power_high_lintner: "some power_high_lintner",
+      protein_total: 120.5,
+      srm_high: 120.5,
+      srm_low: 120.5
+    }
+    @update_attrs %{
+      description: "some updated description",
+      extract_fg: 456.7,
+      grain_type: "some updated grain_type",
+      lovibond_high: 456.7,
+      lovibond_low: 456.7,
+      manufacturer: "some updated manufacturer",
+      max_usage: 456.7,
+      moisture: 456.7,
+      must_mash: false,
+      name: "some updated name",
+      origin: "some updated origin",
+      potential: 456.7,
+      power_high_lintner: "some updated power_high_lintner",
+      protein_total: 456.7,
+      srm_high: 456.7,
+      srm_low: 456.7
+    }
+    @invalid_attrs %{
+      description: nil,
+      extract_fg: nil,
+      grain_type: nil,
+      lovibond_high: nil,
+      lovibond_low: nil,
+      manufacturer: nil,
+      max_usage: nil,
+      moisture: nil,
+      must_mash: nil,
+      name: nil,
+      origin: nil,
+      potential: nil,
+      power_high_lintner: nil,
+      protein_total: nil,
+      srm_high: nil,
+      srm_low: nil
+    }
+
+    def grain_fixture(attrs \\ %{}) do
+      {:ok, grain} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Ingredients.create_grain()
+
+      grain
+    end
+
+    test "list_grains/0 returns all grains" do
+      grain = grain_fixture()
+      assert Ingredients.list_grains() == [grain]
+    end
+
+    test "get_grain!/1 returns the grain with given id" do
+      grain = grain_fixture()
+      assert Ingredients.get_grain!(grain.id) == grain
+    end
+
+    test "create_grain/1 with valid data creates a grain" do
+      assert {:ok, %Grain{} = grain} = Ingredients.create_grain(@valid_attrs)
+      assert grain.description == "some description"
+      assert grain.extract_fg == 120.5
+      assert grain.grain_type == "some grain_type"
+      assert grain.lovibond_high == 120.5
+      assert grain.lovibond_low == 120.5
+      assert grain.manufacturer == "some manufacturer"
+      assert grain.max_usage == 120.5
+      assert grain.moisture == 120.5
+      assert grain.must_mash == true
+      assert grain.name == "some name"
+      assert grain.origin == "some origin"
+      assert grain.potential == 120.5
+      assert grain.power_high_lintner == "some power_high_lintner"
+      assert grain.protein_total == 120.5
+      assert grain.srm_high == 120.5
+      assert grain.srm_low == 120.5
+    end
+
+    test "create_grain/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Ingredients.create_grain(@invalid_attrs)
+    end
+
+    test "update_grain/2 with valid data updates the grain" do
+      grain = grain_fixture()
+      assert {:ok, %Grain{} = grain} = Ingredients.update_grain(grain, @update_attrs)
+      assert grain.description == "some updated description"
+      assert grain.extract_fg == 456.7
+      assert grain.grain_type == "some updated grain_type"
+      assert grain.lovibond_high == 456.7
+      assert grain.lovibond_low == 456.7
+      assert grain.manufacturer == "some updated manufacturer"
+      assert grain.max_usage == 456.7
+      assert grain.moisture == 456.7
+      assert grain.must_mash == false
+      assert grain.name == "some updated name"
+      assert grain.origin == "some updated origin"
+      assert grain.potential == 456.7
+      assert grain.power_high_lintner == "some updated power_high_lintner"
+      assert grain.protein_total == 456.7
+      assert grain.srm_high == 456.7
+      assert grain.srm_low == 456.7
+    end
+
+    test "update_grain/2 with invalid data returns error changeset" do
+      grain = grain_fixture()
+      assert {:error, %Ecto.Changeset{}} = Ingredients.update_grain(grain, @invalid_attrs)
+      assert grain == Ingredients.get_grain!(grain.id)
+    end
+
+    test "delete_grain/1 deletes the grain" do
+      grain = grain_fixture()
+      assert {:ok, %Grain{}} = Ingredients.delete_grain(grain)
+      assert_raise Ecto.NoResultsError, fn -> Ingredients.get_grain!(grain.id) end
+    end
+
+    test "change_grain/1 returns a grain changeset" do
+      grain = grain_fixture()
+      assert %Ecto.Changeset{} = Ingredients.change_grain(grain)
+    end
+  end
 end

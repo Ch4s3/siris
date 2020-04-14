@@ -14,7 +14,7 @@
   <%= error_tag f, :boil_time %>
 
   <%= label f, :batch_size, "Batch Size (gal)" %>
-  <%= number_input f, :batch_size, value: 5.0 %>
+  <%= number_input f, :batch_size, value: 5.0, step: 0.05, min: 0 %>
   <%= error_tag f, :batch_size %>
 
   <div>

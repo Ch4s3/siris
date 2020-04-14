@@ -27,7 +27,7 @@
   <%= hidden_input f, :recipe_id, value: @recipe.id %>
   
   <%= label f, :name, "Variety" %>
-  <%= text_input f, :name, [autocomplete: "off", placeholder: "What kind of hops?"]%>
+  <%= text_input f, :name, [autocomplete: "off", placeholder: "What kind of hops?", phx_debounce: "275"]%>
   <%= error_tag f, :name %>
   <div>
     <%= for hop <- @hops do %>

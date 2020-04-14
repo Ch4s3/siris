@@ -29,6 +29,7 @@ defmodule Siris.Ingredients do
     from(h in Hop,
       where: ilike(h.variety, ^like)
     )
+    |> do_select()
     |> Repo.all()
   end
 
@@ -57,6 +58,17 @@ defmodule Siris.Ingredients do
       where: ilike(h.aroma, ^like)
     )
     |> Repo.all()
+  end
+
+  defp do_select(query) do
+    query
+    |> select([
+      :id,
+      :variety,
+      :origin,
+      :aa_low,
+      :aa_high
+    ])
   end
 
   def aroma_hops do
@@ -150,5 +162,101 @@ defmodule Siris.Ingredients do
   """
   def change_hop(%Hop{} = hop) do
     Hop.changeset(hop, %{})
+  end
+
+  alias Siris.Ingredients.Grain
+
+  @doc """
+  Returns the list of grains.
+
+  ## Examples
+
+      iex> list_grains()
+      [%Grain{}, ...]
+
+  """
+  def list_grains do
+    Repo.all(Grain)
+  end
+
+  @doc """
+  Gets a single grain.
+
+  Raises `Ecto.NoResultsError` if the Grain does not exist.
+
+  ## Examples
+
+      iex> get_grain!(123)
+      %Grain{}
+
+      iex> get_grain!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_grain!(id), do: Repo.get!(Grain, id)
+
+  @doc """
+  Creates a grain.
+
+  ## Examples
+
+      iex> create_grain(%{field: value})
+      {:ok, %Grain{}}
+
+      iex> create_grain(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_grain(attrs \\ %{}) do
+    %Grain{}
+    |> Grain.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a grain.
+
+  ## Examples
+
+      iex> update_grain(grain, %{field: new_value})
+      {:ok, %Grain{}}
+
+      iex> update_grain(grain, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_grain(%Grain{} = grain, attrs) do
+    grain
+    |> Grain.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a grain.
+
+  ## Examples
+
+      iex> delete_grain(grain)
+      {:ok, %Grain{}}
+
+      iex> delete_grain(grain)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_grain(%Grain{} = grain) do
+    Repo.delete(grain)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking grain changes.
+
+  ## Examples
+
+      iex> change_grain(grain)
+      %Ecto.Changeset{source: %Grain{}}
+
+  """
+  def change_grain(%Grain{} = grain) do
+    Grain.changeset(grain, %{})
   end
 end

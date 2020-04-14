@@ -1,4 +1,7 @@
 defmodule Siris.Formulas.Ibu do
+  @moduledoc """
+  Formulas for calculating IBUs
+  """
   alias Siris.Recipes.HopAddition
 
   @doc ~S"""

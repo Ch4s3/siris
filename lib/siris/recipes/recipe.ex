@@ -1,4 +1,7 @@
 defmodule Siris.Recipes.Recipe do
+  @moduledoc """
+  Database module for storing and accessing recipes
+  """
   use Ecto.Schema
   import Ecto.Changeset
   alias Siris.Recipes.HopAddition
@@ -21,6 +24,14 @@ defmodule Siris.Recipes.Recipe do
 
     recipe
     |> cast(data, [:name, :uuid, :boil_time, :ibus, :batch_size, :batch_units])
+    |> round_ibus()
     |> validate_required([:name, :uuid])
   end
+
+  def round_ibus(changeset = %{changes: %{ibus: ibus}}) when is_float(ibus) do
+    updated_ibus = Float.round(ibus, 2)
+    put_change(changeset, :ibus, updated_ibus)
+  end
+
+  def round_ibus(changeset), do: changeset
 end

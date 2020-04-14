@@ -1,9 +1,11 @@
 defmodule SirisWeb.HopAdditionsLive do
+  @moduledoc false
+
   require Logger
   use Phoenix.LiveView
+  alias Siris.Ingredients
   alias Siris.Recipes
   alias Siris.Recipes.HopAddition
-  alias Siris.Ingredients
   import ScoutApm.Tracing
 
   @timing_opts [category: "Hops"]
@@ -53,10 +55,19 @@ defmodule SirisWeb.HopAdditionsLive do
      })}
   end
 
-  def handle_event("remove_hop", %{"hop-id" => hop_id}, socket) do
+  def handle_event("remove_hop", %{"hop-id" => hop_id} = params, socket) do
     hop_id = String.to_integer(hop_id)
+
     hop_id |> Recipes.get_hop_addition!() |> Recipes.delete_hop_addition()
-    next_hops = socket.assigns()[:hops] |> Enum.reject(fn hop -> hop.id == hop_id end)
+
+    next_hops =
+      case socket.assigns[:hop_additions] do
+        nil ->
+          []
+
+        hops ->
+          Enum.reject(hops, fn hop -> hop.id == hop_id end)
+      end
 
     {:ok, recipe, _hop_additions} =
       Recipes.update_from_hop_additions(
@@ -65,7 +76,9 @@ defmodule SirisWeb.HopAdditionsLive do
         next_hops
       )
 
-    next_data = socket.assigns |> Map.replace!(:hops, next_hops) |> Map.replace!(:recipe, recipe)
+    next_data =
+      socket.assigns |> Map.replace!(:hop_additions, next_hops) |> Map.replace!(:recipe, recipe)
+
     {:noreply, fetch(socket, next_data)}
   end
 
@@ -79,7 +92,7 @@ defmodule SirisWeb.HopAdditionsLive do
            Recipes.update_from_hop_additions(
              addition,
              socket.assigns[:recipe],
-             socket.assigns[:hops]
+             socket.assigns[:hop_additions]
            ) do
       {:noreply,
        assign(socket, %{
@@ -97,8 +110,8 @@ defmodule SirisWeb.HopAdditionsLive do
     id = data["recipe"]["id"] || data[:recipe].id
 
     assign(socket, %{
-      hop_additions: Recipes.list_hop_additions(id),
-      recipe: Recipes.get_recipe!(id),
+      hop_additions: data[:hop_additions] || Recipes.list_hop_additions(id),
+      recipe: data[:recipe] || Recipes.get_recipe!(id),
       changeset: fetch_changes(data),
       hops: data[:hops] || []
     })

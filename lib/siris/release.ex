@@ -1,4 +1,5 @@
 defmodule Siris.Release do
+  @moduledoc false
   @app :siris
 
   def migrate do
