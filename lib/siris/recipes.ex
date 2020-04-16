@@ -229,4 +229,100 @@ defmodule Siris.Recipes do
   def change_recipe(%Recipe{} = recipe) do
     Recipe.changeset(recipe, %{})
   end
+
+  alias Siris.Recipes.FermentableAddition
+
+  @doc """
+  Returns the list of fermentable_additions.
+
+  ## Examples
+
+      iex> list_fermentable_additions()
+      [%FermentableAddition{}, ...]
+
+  """
+  def list_fermentable_additions do
+    Repo.all(FermentableAddition)
+  end
+
+  @doc """
+  Gets a single fermentable_addition.
+
+  Raises `Ecto.NoResultsError` if the Fermentable addition does not exist.
+
+  ## Examples
+
+      iex> get_fermentable_addition!(123)
+      %FermentableAddition{}
+
+      iex> get_fermentable_addition!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_fermentable_addition!(id), do: Repo.get!(FermentableAddition, id)
+
+  @doc """
+  Creates a fermentable_addition.
+
+  ## Examples
+
+      iex> create_fermentable_addition(%{field: value})
+      {:ok, %FermentableAddition{}}
+
+      iex> create_fermentable_addition(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_fermentable_addition(attrs \\ %{}) do
+    %FermentableAddition{}
+    |> FermentableAddition.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a fermentable_addition.
+
+  ## Examples
+
+      iex> update_fermentable_addition(fermentable_addition, %{field: new_value})
+      {:ok, %FermentableAddition{}}
+
+      iex> update_fermentable_addition(fermentable_addition, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_fermentable_addition(%FermentableAddition{} = fermentable_addition, attrs) do
+    fermentable_addition
+    |> FermentableAddition.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a fermentable_addition.
+
+  ## Examples
+
+      iex> delete_fermentable_addition(fermentable_addition)
+      {:ok, %FermentableAddition{}}
+
+      iex> delete_fermentable_addition(fermentable_addition)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_fermentable_addition(%FermentableAddition{} = fermentable_addition) do
+    Repo.delete(fermentable_addition)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking fermentable_addition changes.
+
+  ## Examples
+
+      iex> change_fermentable_addition(fermentable_addition)
+      %Ecto.Changeset{source: %FermentableAddition{}}
+
+  """
+  def change_fermentable_addition(%FermentableAddition{} = fermentable_addition) do
+    FermentableAddition.changeset(fermentable_addition, %{})
+  end
 end

@@ -44,10 +44,11 @@ defmodule Siris.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:csv, "~> 2.3"},
-      {:phoenix_live_view, "~> 0.11.1"},
+      {:phoenix_live_view, "~> 0.12.0"},
       {:sentry, "~> 7.0"},
       {:scout_apm, "~> 1.0.6"},
-      {:credo, "~> 1.3", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
+      {:phoenix_live_dashboard, "~> 0.1"}
     ]
   end
 

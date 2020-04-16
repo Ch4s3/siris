@@ -5,6 +5,11 @@ defmodule Siris.Ingredients.Grain do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @all_fields ~w(name origin grain_type manufacturer must_mash lovibond_low
+                lovibond_high srm_low srm_high power_high_lintner
+                protein_total extract_fg potential moisture max_usage
+                description)a
+
   schema "grains" do
     field :description, :string
     field :extract_fg, :float
@@ -29,24 +34,7 @@ defmodule Siris.Ingredients.Grain do
   @doc false
   def changeset(grain, attrs) do
     grain
-    |> cast(attrs, [
-      :name,
-      :origin,
-      :grain_type,
-      :manufacturer,
-      :must_mash,
-      :lovibond_low,
-      :lovibond_high,
-      :srm_low,
-      :srm_high,
-      :power_high_lintner,
-      :protein_total,
-      :extract_fg,
-      :potential,
-      :moisture,
-      :max_usage,
-      :description
-    ])
+    |> cast(attrs, @all_fields)
     |> validate_required([
       :name,
       :manufacturer,

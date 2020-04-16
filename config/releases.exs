@@ -22,3 +22,5 @@ config :siris, SirisWeb.Endpoint,
 
 config :scout_apm,
   key: scout_key
+
+config :live_dashboard, key: System.get_env("DASHBOARD_KEY")
