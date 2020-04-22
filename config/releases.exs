@@ -25,3 +25,9 @@ config :scout_apm,
   key: scout_key
 
 config :live_dashboard, key: dashboard_key
+
+config :siris,
+  auth_config: [
+    username: "admin",
+    password: dashboard_key
+  ]

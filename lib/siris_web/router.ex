@@ -19,7 +19,7 @@ defmodule SirisWeb.Router do
   end
 
   pipeline :admins_only do
-    plug :basic_auth, username: "admin", password: Application.get_env(:live_dashboard, :key)
+    plug BasicAuth, use_config: {:siris, :auth_config}
   end
 
   if Mix.env() == :dev do
