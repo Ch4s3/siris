@@ -3,7 +3,6 @@ import Config
 secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 port = String.to_integer(System.get_env("PORT", "4000"))
 scout_key = System.get_env("SCOUT_KEY")
-dashboard_key = System.get_env("DASHBOARD_KEY")
 
 database_url =
   System.get_env("DATABASE_URL") ||
@@ -23,11 +22,3 @@ config :siris, SirisWeb.Endpoint,
 
 config :scout_apm,
   key: scout_key
-
-config :live_dashboard, key: dashboard_key
-
-config :siris,
-  auth_config: [
-    username: "admin",
-    password: dashboard_key
-  ]

@@ -19,7 +19,10 @@ defmodule SirisWeb.Router do
   end
 
   pipeline :admins_only do
-    plug BasicAuth, use_config: {:siris, :auth_config}
+    # hook this up to real auth later
+    plug :basic_auth,
+      username: "admin",
+      password: "hFQfAfnvG6j/XYGIFLy15USkDszk7HltO6J+Xw2FtI6a+SSvldToieFz55h6LIQI"
   end
 
   if Mix.env() == :dev do
